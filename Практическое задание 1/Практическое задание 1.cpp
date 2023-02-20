@@ -25,7 +25,6 @@ int* pasteelement(int n, int x[], int num, int pos)
     n++;
     for (i = n; i >= pos; i--)
         arr1[i] = arr1[i - 1];
-    // вставить х в поз
     arr1[pos - 1] = num;
     return arr1;
 }
