@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <vector>
 using namespace std;
 
 int digitroot(int n) {
@@ -50,6 +51,10 @@ int* deleteelement(int* x, int n)
     }
     cout << endl;
     return x;
+}
+
+bool is7(int k) {
+    return digitroot(k) == 7;
 }
 
 int main()
@@ -125,7 +130,40 @@ int main()
         break;
     }
     case 3: {
-        cout << "Не доделано.";
+        int ARRSIZE;
+        cin >> ARRSIZE;
+        vector<int> x(ARRSIZE);
+        for (int i = 0; i < ARRSIZE; i++) {
+            cin >> x[i];
+        }
+        int r = 1000000;
+        int k = 0;
+        for (int i = 0; i < ARRSIZE; i++) {
+            if (digitroot(i) == 7) {
+                if (i < r) {
+                    r = i;
+                }
+                k++;
+            }
+        }
+        if (k == 0) {
+            r = 0;
+        }
+        if (r != 0) {
+            x.insert(x.begin() + r-1, 666);
+            int d = ARRSIZE + 1;
+            for (int i = 0; i < d; i++) {
+                cout << x[i] << " ";
+            }
+            vector<int>::iterator x1;
+            x1 = remove_if(x.begin(), x.end(), is7);
+        for (int i = 0; i < 10; i++) {
+            cout << x1[i] << " ";
+        }
+        }
+        else {
+            cout << "Ошибка. Введите другой массив.";
+        }
         break;
     }
     default: {
