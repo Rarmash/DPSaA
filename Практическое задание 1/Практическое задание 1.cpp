@@ -47,7 +47,7 @@ vector<int> vectordeleteelement(vector<int> x)
     return x;
 }
 
-void deleteelement(int x[], int n, int pos)
+void staticdeleteelement(int x[], int n, int pos)
 {
     int k = 0;
     for (int i = pos; i < n; ++i)
@@ -55,7 +55,17 @@ void deleteelement(int x[], int n, int pos)
         x[i] = x[i + 1];
         k++;
     }
-    x = (int*)realloc(x, sizeof(int) * (n*k));
+}
+
+void dynamicdeleteelement(int x[], int n, int pos)
+{
+    int k = 0;
+    for (int i = pos; i < n; ++i)
+    {
+        x[i] = x[i + 1];
+        k++;
+    }
+    x = (int*)realloc(x, sizeof(int) * (n * k));
 }
 
 int vibor0() {
@@ -134,7 +144,7 @@ int main()
         case 3: {
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
-                    deleteelement(x, ARRSIZE, i);
+                    staticdeleteelement(x, ARRSIZE, i);
                 }
             }
             for (int i = 0; i < ARRSIZE - 1; i++) {
@@ -144,7 +154,6 @@ int main()
         }
         break;
         }
-        break;
     }
     case 2: {
         int ARRSIZE;
@@ -202,7 +211,7 @@ int main()
         case 3: {
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
-                    deleteelement(x, ARRSIZE, i);
+                    dynamicdeleteelement(x, ARRSIZE, i);
                 }
             }
             for (int i = 0; i < ARRSIZE - 1; i++) {
@@ -211,8 +220,8 @@ int main()
             break;
         }
         break;
+        return(0);
         }
-        break;
     }
     case 3: {
         int ARRSIZE;
@@ -276,8 +285,8 @@ int main()
             break;
         }
         break;
+        return(0);
         }
-        break;
     }
     default: {
         cout << "Вы ввели неверный номер.";
