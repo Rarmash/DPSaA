@@ -25,16 +25,37 @@ void pasteelement(int n, int x[], int num, int pos)
     x[pos] = num;
 }
 
+vector<int> vectorpasteelement(vector<int> x, int num, int pos)
+{
+    x.emplace(x.begin() + pos, num);
+    return x;
+}
+
+vector<int> vectordeleteelement(vector<int> x)
+{
+    bool k = true;
+    while (k) {
+        k = false;
+        for (int i = 0; i < x.size(); i++) {
+            if (digitroot(x[i]) == 7) {
+                x.erase(x.begin() + i);
+                k = true;
+                break;
+            }
+        }
+    }
+    return x;
+}
+
 void deleteelement(int x[], int n, int pos)
 {
+    int k = 0;
     for (int i = pos; i < n; ++i)
     {
         x[i] = x[i + 1];
+        k++;
     }
-}
-
-bool is7(int k) {
-    return digitroot(k) == 7;
+    x = (int*)realloc(x, sizeof(int) * (n*k));
 }
 
 int vibor0() {
@@ -61,14 +82,14 @@ int main()
     cout << "Лабораторная работа №1 по теме Простые алгоритмы сортировки массивов. Гришин Андрей" << endl;
     switch (vibor0()) {
     case 1: {
+        const int ARRSIZE = 10;
+        int x[ARRSIZE];
+        cout << "Заполните 10 элементов массива: ";
+        for (int i = 0; i < ARRSIZE; i++) {
+            cin >> x[i];
+        }
         switch (vibor()) {
         case 1: {
-            const int ARRSIZE = 10;
-            int x[ARRSIZE];
-            cout << "Заполните 10 элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             bool k = false;
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
@@ -83,12 +104,6 @@ int main()
             break;
         }
         case 2: {
-            const int ARRSIZE = 10;
-            int x[ARRSIZE];
-            cout << "Заполните 10 элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             int y;
             int r = 1000000;
             int k = 0;
@@ -117,12 +132,6 @@ int main()
             break;
         }
         case 3: {
-            const int ARRSIZE = 10;
-            int x[ARRSIZE];
-            cout << "Заполните 10 элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
                     deleteelement(x, ARRSIZE, i);
@@ -135,18 +144,19 @@ int main()
         }
         break;
         }
+        break;
     }
     case 2: {
+        int ARRSIZE;
+        cout << "Введите размерность массива: ";
+        cin >> ARRSIZE;
+        int* x = new int[ARRSIZE];
+        cout << "Заполните " << ARRSIZE << " элементов массива: ";
+        for (int i = 0; i < ARRSIZE; i++) {
+            cin >> x[i];
+        }
         switch (vibor()) {
         case 1: {
-            int ARRSIZE;
-            cout << "Введите размерность массива: ";
-            cin >> ARRSIZE;
-            int* x = new int[ARRSIZE];
-            cout << "Заполните " << ARRSIZE << " элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             bool k = false;
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
@@ -161,14 +171,6 @@ int main()
             break;
         }
         case 2: {
-            int ARRSIZE;
-            cout << "Введите размерность массива: ";
-            cin >> ARRSIZE;
-            int* x = new int[ARRSIZE];
-            cout << "Заполните " << ARRSIZE << " элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             int y;
             int r = 1000000;
             int k = 0;
@@ -185,6 +187,7 @@ int main()
             }
             cout << "Введите элемент для вставки: "; cin >> y;
             if (r != 0) {
+                x = (int*)realloc(x, sizeof(int) * (ARRSIZE+1));
                 pasteelement(ARRSIZE, x, y, r);
                 int d = ARRSIZE + 1;
                 for (int i = 0; i < d; i++) {
@@ -197,14 +200,6 @@ int main()
             break;
         }
         case 3: {
-            int ARRSIZE;
-            cout << "Введите размерность массива: ";
-            cin >> ARRSIZE;
-            int* x = new int[ARRSIZE];
-            cout << "Заполните " << ARRSIZE << " элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
                     deleteelement(x, ARRSIZE, i);
@@ -217,18 +212,19 @@ int main()
         }
         break;
         }
+        break;
     }
     case 3: {
+        int ARRSIZE;
+        cout << "Введите размерность массива: ";
+        cin >> ARRSIZE;
+        vector<int> x(ARRSIZE);
+        cout << "Заполните " << ARRSIZE << " элементов массива: ";
+        for (int i = 0; i < ARRSIZE; i++) {
+            cin >> x[i];
+        }
         switch (vibor()) {
         case 1: {
-            int ARRSIZE;
-            cout << "Введите размерность массива: ";
-            cin >> ARRSIZE;
-            vector<int> x(ARRSIZE);
-            cout << "Заполните " << ARRSIZE << " элементов массива: ";
-            for (int i = 0; i < ARRSIZE; i++) {
-                cin >> x[i];
-            }
             bool k = false;
             for (int i = 0; i < ARRSIZE; i++) {
                 if (digitroot(x[i]) == 7) {
@@ -243,51 +239,45 @@ int main()
             break;
         }
         case 2: {
-
+            int y;
+            int r = 1000000;
+            int k = 0;
+            for (int i = 0; i < ARRSIZE; i++) {
+                if (digitroot(x[i]) == 7) {
+                    if (i < r) {
+                        r = i;
+                    }
+                    k++;
+                }
+            }
+            if (k == 0) {
+                r = 0;
+            }
+            cout << "Введите элемент для вставки: "; cin >> y;
+            if (r != 0) {
+                x = vectorpasteelement(x, y, r);
+                int size = x.size();
+                for (int i = 0; i < size; i++) {
+                    cout << x[i] << " ";
+                }
+            }
+            else {
+                cout << "Ошибка. Введите другой массив.";
+            }
+            break;
         }
         case 3: {
-
-        }
-        break;
-        }
-
-        /*
-        int ARRSIZE;
-        cin >> ARRSIZE;
-        vector<int> x(ARRSIZE);
-        for (int i = 0; i < ARRSIZE; i++) {
-            cin >> x[i];
-        }
-        int r = 1000000;
-        int k = 0;
-        for (int i = 0; i < ARRSIZE; i++) {
-            if (digitroot(i) == 7) {
-                if (i < r) {
-                    r = i;
-                }
-                k++;
+            for (int i = 0; i < ARRSIZE; i++) {
+                x = vectordeleteelement(x);
             }
-        }
-        if (k == 0) {
-            r = 0;
-        }
-        if (r != 0) {
-            x.insert(x.begin() + r-1, 666);
-            int d = ARRSIZE + 1;
-            for (int i = 0; i < d; i++) {
+            for (int i = 0; i < x.size(); i++) {
                 cout << x[i] << " ";
             }
-            vector<int>::iterator x1;
-            x1 = remove_if(x.begin(), x.end(), is7);
-        for (int i = 0; i < 10; i++) {
-            cout << x1[i] << " ";
-        }
-        }
-        else {
-            cout << "Ошибка. Введите другой массив.";
+            break;
         }
         break;
-        */
+        }
+        break;
     }
     default: {
         cout << "Вы ввели неверный номер.";
