@@ -47,25 +47,12 @@ vector<int> vectordeleteelement(vector<int> x)
     return x;
 }
 
-void staticdeleteelement(int x[], int n, int pos)
+void deleteelement(int x[], int n, int pos)
 {
-    int k = 0;
     for (int i = pos; i < n; ++i)
     {
         x[i] = x[i + 1];
-        k++;
     }
-}
-
-void dynamicdeleteelement(int x[], int n, int pos)
-{
-    int k = 0;
-    for (int i = pos; i < n; ++i)
-    {
-        x[i] = x[i + 1];
-        k++;
-    }
-    x = (int*)realloc(x, sizeof(int) * (n * k));
 }
 
 template <typename ArrayType1>
@@ -87,10 +74,12 @@ void ArrayFilling(int* arr, int size)
 
 void ArrayFilling(vector<int>& arr, int size)
 {
+    int num;
     cout << "Заполните массив: ";
     for (int i = 0; i < size; i++)
     {
-        cin >> arr[i];
+        cin >> num;
+        arr.push_back(num);
     }
 }
 
@@ -133,13 +122,14 @@ int main()
                 for (int i = 0; i < ARRSIZE; i++) {
                     if (digitroot(x[i]) == 7) {
                         cout << "Цифровой корень равен 7 у элемента под индексом " << i;
+                        cout << endl;
                         k = true;
                     }
                 }
                 if (k == false) {
                     cout << "Элементы с цифровым корнем 7 отсутствуют.";
+                    cout << endl;
                 }
-                cout << endl;
                 break;
             }
                   break;
@@ -159,7 +149,7 @@ int main()
                     r = 0;
                 }
                 cout << "Введите элемент для вставки: "; cin >> y;
-                if (r != 0) {
+                if (r != 1000000) {
                     pasteelement(ARRSIZE, x, y, r);
                     int d = ARRSIZE + 1;
                     PrintArray(x, d);
@@ -172,12 +162,19 @@ int main()
             }
                   break;
             case 3: {
+                int k = 0;
                 for (int i = 0; i < ARRSIZE; i++) {
                     if (digitroot(x[i]) == 7) {
-                        staticdeleteelement(x, ARRSIZE, i);
+                        deleteelement(x, ARRSIZE, i);
+                        k++;
                     }
                 }
-                PrintArray(x, ARRSIZE - 1);
+                if (k != 0) {
+                    PrintArray(x, ARRSIZE - k);
+                }
+                else {
+                    cout << "Ошибка удаления элементов." << endl;
+                }
                 break;
             }
             }
@@ -211,20 +208,15 @@ int main()
             case 2: {
                 int y;
                 int r = 1000000;
-                int k = 0;
                 for (int i = 0; i < ARRSIZE; i++) {
                     if (digitroot(x[i]) == 7) {
                         if (i < r) {
                             r = i;
                         }
-                        k++;
                     }
                 }
-                if (k == 0) {
-                    r = 0;
-                }
                 cout << "Введите элемент для вставки: "; cin >> y;
-                if (r != 0) {
+                if (r != 1000000) {
                     x = (int*)realloc(x, sizeof(int) * (ARRSIZE + 1));
                     pasteelement(ARRSIZE, x, y, r);
                     int d = ARRSIZE + 1;
@@ -237,12 +229,20 @@ int main()
             }
                   break;
             case 3: {
+                int k = 0;
                 for (int i = 0; i < ARRSIZE; i++) {
                     if (digitroot(x[i]) == 7) {
-                        dynamicdeleteelement(x, ARRSIZE, i);
+                        deleteelement(x, ARRSIZE, i);
+                        k++;
                     }
+                    x = (int*)realloc(x, sizeof(int) * ARRSIZE-k);
                 }
-                PrintArray(x, ARRSIZE - 1);
+                if (k != 0) {
+                    PrintArray(x, ARRSIZE - k);
+                }
+                else {
+                    cout << "Ошибка удаления элементов." << endl;
+                }
                 break;
             }
             }
@@ -255,7 +255,7 @@ int main()
             int ARRSIZE;
             cout << "Введите размерность массива: ";
             cin >> ARRSIZE;
-            vector<int> x(ARRSIZE);
+            vector<int> x;
             ArrayFilling(x, ARRSIZE);
             switch (vibor()) {
             case 1: {
@@ -264,32 +264,28 @@ int main()
                     if (digitroot(x[i]) == 7) {
                         cout << "Цифровой корень равен 7 у элемента под индексом " << i;
                         k = true;
+                        cout << endl;
                     }
                 }
                 if (k == false) {
                     cout << "Элементы с цифровым корнем 7 отсутствуют.";
+                    cout << endl;
                 }
-                cout << endl;
                 break;
             }
                   break;
             case 2: {
                 int y;
                 int r = 1000000;
-                int k = 0;
                 for (int i = 0; i < ARRSIZE; i++) {
                     if (digitroot(x[i]) == 7) {
                         if (i < r) {
                             r = i;
                         }
-                        k++;
                     }
                 }
-                if (k == 0) {
-                    r = 0;
-                }
                 cout << "Введите элемент для вставки: "; cin >> y;
-                if (r != 0) {
+                if (r != 1000000) {
                     x = vectorpasteelement(x, y, r);
                     PrintArray(x, x.size());
                 }
@@ -300,10 +296,17 @@ int main()
             }
             break;
             case 3: {
+                int k = 0;
                 for (int i = 0; i < ARRSIZE; i++) {
                     x = vectordeleteelement(x);
+                    k++;
                 }
-                PrintArray(x, x.size());
+                if (k != 0) {
+                    PrintArray(x, x.size());
+                }
+                else {
+                    cout << "Ошибка удаления элементов." << endl;
+                }
                 break;
             }
             }
