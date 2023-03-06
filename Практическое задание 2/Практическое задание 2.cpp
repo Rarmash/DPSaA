@@ -42,31 +42,23 @@ void MatrixOutput(auto arr, int size)
 
 void MatrixCircle(auto arr, int size)
 {
+    int a = 0, b = 1, c = 2;
     for (int i = 0; i < size; i++) {
-        if (i == 0) {
-            for (int j = 0; j < size; j++) {
-                cout << arr[i][j] << " ";
-            }
+        for (int j = a; j < size - a; j++) {
+            cout << arr[a][j] << " ";
         }
-        else if (i > 0 && i < size - 1) {
-            for (int j = 0; j < size; j++) {
-                if (j == size - 1) {
-                    cout << arr[i][j] << " ";
-                }
-            }
+        for (int j = b; j < size - a; j++) {
+            cout << arr[j][size - b] << " ";
         }
-        else if (i == size - 1) {
-            for (int j = size - 1; j >= 0; j--) {
-                cout << arr[i][j] << " ";
-            }
+        for (int j = size - c; j >= a; j--) {
+            cout << arr[size - b][j] << " ";
         }
-    }
-    for (int i = size - 2; i > 0; i--) {
-        for (int j = 0; j < size; j++) {
-            if (j == 0) {
-                cout << arr[i][j] << " ";
-            }
+        for (int j = size - c; j > a; j--) {
+            cout << arr[j][a] << " ";
         }
+        a++;
+        b++;
+        c++;
     }
 }
 
@@ -76,7 +68,6 @@ void PointsFilling(vector<vector<int>>& points, int size)
     {
         for (int k = 0; k < 2; k++)
         {
-            // для точки с координатами X и Y
             points[i].resize(2);
             cin >> points[i][k];
         }
